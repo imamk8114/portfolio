@@ -1,0 +1,189 @@
+{
+  "skills": [
+    {
+      "name": "Frontend Engineering",
+      "description": "I build production interfaces in React, TypeScript and Lightning Web Components, with state in Redux, Context and hooks.",
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "ES6",
+        "React",
+        "Lightning Web Components",
+        "Redux",
+        "Context API",
+        "Hooks",
+        "HTML5",
+        "CSS3"
+      ]
+    },
+    {
+      "name": "Accessibility & Design Systems",
+      "description": "I build shared component libraries with WCAG 2.1 patterns, ARIA, focus management and Storybook documentation.",
+      "items": [
+        "WCAG 2.1",
+        "ARIA",
+        "Storybook",
+        "Ant Design",
+        "Material-UI",
+        "Cypress"
+      ]
+    },
+    {
+      "name": "Low-code & Developer Tooling",
+      "description": "I work on metadata-driven runtimes and code generators that turn admin-authored JSON into real components, and I use AI-assisted authoring in my workflow.",
+      "items": [
+        "Metadata-driven UI",
+        "Code generation",
+        "Webpack",
+        "Claude",
+        "Cursor MCP"
+      ]
+    },
+    {
+      "name": "Performance",
+      "description": "I make data-heavy screens faster with lazy-loading, pre-loading, event-driven data flow and by migrating legacy components.",
+      "items": [
+        "Lazy-loading",
+        "Event-driven design",
+        "Profiling",
+        "Aura to LWC migration"
+      ]
+    },
+    {
+      "name": "Backend & Delivery",
+      "description": "I know enough server-side and infrastructure to own a feature end to end, and I have led a team through delivery.",
+      "items": [
+        "Node.js",
+        "Express.js",
+        "Java",
+        "Apex",
+        "MongoDB",
+        "MySQL",
+        "Parse Server",
+        "Kafka",
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "Git"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "company": "Salesforce",
+      "start": "2025-04",
+      "end": null,
+      "title": "Member of Technical Staff",
+      "period": "Apr 2025 – Present",
+      "points": [
+        "Engineered and optimized complex Lightning Web Components (LWC) within OmniStudio Builder, enabling thousands of Salesforce admins and developers to create guided experiences with zero code; partnered cross-functionally with Product, UX, and Core Platform teams to support versioning, state persistence, and metadata-driven behavior.",
+        "Built on and contributed to OmniStudio's metadata-driven low-code runtime and server-side LWC code-generation pipeline, compiling admin-authored JSON into real LWC bundles on demand and producing dual-themed HTML (SLDS + Newport), FreeMarker-templated JS, and compiled ModuleDef definitions.",
+        "Owned and extended runtime LWC elements in a ~90-component shared library/base-class hierarchy, including WCAG 2.1 fixes, ARIA patterns, semantic markup, focus management, step-chart focus-order fixes, and prevention of unavailable-step activation across builder interfaces.",
+        "Engineered an event-driven data-JSON aggregation model using omniaggregate bubbling to a Header root and non-proxied string payloads, eliminating LWC reactive-proxy JSON.stringify performance overhead on large scripts.",
+        "Solved cross-namespace component resolution so one generator supports managed-package and core Salesforce orgs through runtime tag remapping; maintained strict backward compatibility through additive-only changes, stable @AuraEnabled signatures/preference keys, downstream-safe Spring beans, instrumentation, metrics, and UPL error logging.",
+        "Leveraged MCP and Cursor rules to design highly dynamic, configurable UI components, improving reusability and reducing new feature development time by over 30%; contributed to internal UI design frameworks and best practices for component composition, theming, and event-driven data binding.",
+        "Integrated a declarative Redux-style Designer with stores/reducers, 60+ property-set editors, and Luvio/Connect wire adapters, with live preview reusing the production runtime through a shared DESIGNER/PLAYER run-mode switch.",
+        "Delivered AI-assisted component authoring using Agentforce invocables and FlexCardSpecToJsonService, converting LLM design specifications into the same PropertySetConfig JSON consumed by the deterministic generator.",
+        "Refactored legacy Aura components into modern LWC architecture, improving rendering performance and cutting UI response latency by up to 40% in data-intensive modules; mentored developers on advanced LWC patterns, accessibility, and front-end performance optimization."
+      ],
+      "location": "Bengaluru, India",
+      "about": "Salesforce is a global enterprise software company best known for its cloud-based CRM platform. OmniStudio is its low-code toolkit for building guided, data-driven customer and employee experiences without writing code.",
+      "summary": "Member of Technical Staff on OmniStudio Builder, the low-code platform where admins author JSON metadata and the system generates production Lightning Web Components. Work spans the shared component library, the metadata-driven runtime, the code-generation pipeline and the designer experience, with Product, UX and Core Platform teams.",
+      "tech": [
+        "Lightning Web Components (LWC)",
+        "JavaScript",
+        "Java",
+        "Apex",
+        "HTML5",
+        "CSS3",
+        "SLDS",
+        "FreeMarker",
+        "Redux-style state management",
+        "Luvio / Connect wire adapters",
+        "Spring",
+        "Aura to LWC migration",
+        "WCAG 2.1",
+        "ARIA",
+        "Agentforce",
+        "Cursor and MCP"
+      ]
+    },
+    {
+      "company": "Freight Tiger",
+      "start": "2023-10",
+      "end": "2025-04",
+      "title": "Software Engineer II",
+      "period": "Oct 2023 – Apr 2025",
+      "points": [
+        "Led a team of 6 and actively participated in Design, Code review, Backlog grooming, effort estimation, risk analysis, and Agile ceremonies and worked with peers to meet the team's sprint.",
+        "Owned Rate Calculation Engine module where users can perform CRUD operations and the system automatically highlights conflicts with existing rules in FRM at the time of creation.",
+        "Developed Planning Module for a top manufacturing client using Google OR tools, Express.Js and MongoDb, resulting in a 25% improvement in production scheduling accuracy and a 15% reduction in lead time.",
+        "Implemented \"Contract bidding\" within the existing bidding module, allowing an e-commerce client to negotiate temporary per-kilometre rates with transporters for specific lanes over a predefined period (30-60 days)."
+      ],
+      "location": "Bengaluru, India",
+      "about": "Freight Tiger is a SaaS product company providing advanced logistics solutions.",
+      "summary": "Software Engineer II leading a team of six on logistics SaaS modules: the Rate Calculation Engine, a Planning Module for a top manufacturing client and a Contract Bidding feature for temporary lane rates, including design, code review, backlog grooming, effort estimation and risk analysis in an Agile team.",
+      "tech": [
+        "JavaScript",
+        "Node.js",
+        "Express.js",
+        "MongoDB",
+        "Google OR-Tools",
+        "Agile"
+      ]
+    },
+    {
+      "company": "Dassault Systèmes",
+      "start": "2022-02",
+      "end": "2023-10",
+      "title": "Software Engineering Specialist",
+      "period": "Feb 2022 – Oct 2023",
+      "points": [
+        "Translated designs and wireframes into high-quality code and wrote application interface code via JavaScript ES6 following React.js workflows.",
+        "Implemented WCAG accessibility guidelines and SEO best practices to enhance user inclusivity and improve organic search performance.",
+        "Optimized legacy code implementations, accelerating front-end compile time by 20% and saving up to 1 hour of developer time every day using Redux-toolkit, React-Router, and Typescript.",
+        "Created custom communication protocols and utilized event-driven patterns to enable efficient data exchange between independently deployed modules while minimizing coupling.",
+        "Implemented security patterns such as JWT and performance patterns such as Lazy-Loading and Pre-Loading to improve page loading time to less than 1.2 secs."
+      ],
+      "location": "Bengaluru, India",
+      "about": "Dassault Systèmes is a global software company providing 3D design, simulation and product lifecycle management solutions.",
+      "summary": "Software Engineering Specialist responsible for turning designs and wireframes into production React interfaces, modernising legacy front-end code, and applying accessibility, SEO, security and performance practices across independently deployed modules.",
+      "tech": [
+        "React.js",
+        "TypeScript",
+        "JavaScript (ES6)",
+        "Redux Toolkit",
+        "React Router",
+        "JWT",
+        "Lazy-loading",
+        "Pre-loading",
+        "WCAG",
+        "SEO"
+      ]
+    },
+    {
+      "company": "Tata Consultancy Services",
+      "start": "2019-07",
+      "end": "2022-02",
+      "title": "Systems Engineer",
+      "period": "Jul 2019 – Feb 2022",
+      "points": [
+        "Automated email notifications for health check details on application servers using smtplib, ssl and python, saving 10hrs a week of manual work.",
+        "Involved in developing onboarding module for various types of Users like Individuals, Joint Account, Institutional and NRI's on React.js for a leading financial institution.",
+        "Created and collaborated with a team of 9 people and enriched existing system metrics by 17% by implementing optimized business logic through code.",
+        "Utilized HTML, CSS, JavaScript to make call Queue dashboards responsive and readable to users."
+      ],
+      "location": "Bengaluru, India",
+      "about": "Tata Consultancy Services (TCS) is a global IT services, consulting and business solutions company.",
+      "summary": "Systems Engineer on a nine-person team delivering web applications for a leading financial institution, including onboarding flows for individual, joint-account, institutional and NRI customers, call-queue dashboards and server health-check automation.",
+      "tech": [
+        "React.js",
+        "JavaScript",
+        "HTML5",
+        "CSS3",
+        "Python",
+        "smtplib and SSL"
+      ]
+    }
+  ]
+}

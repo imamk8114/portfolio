@@ -1,0 +1,482 @@
+[
+  {
+    "slug": "syncboard",
+    "title": "Syncboard: a local-first collaborative kanban board",
+    "tagline": "Operation-log state, CRDT-style merge, offline conflict review and time travel, all hand-built and runnable in two browser tabs.",
+    "summary": "I built a Trello-style kanban board whose entire state is an append-only log of immutable ops that a pure reducer folds into the board. Open it in two windows and edits sync live; flip the offline switch and your changes queue while simulated teammates keep working, then reconnect to review genuine conflicts. A guided tour that auto-completes from real events walks a visitor through all of it.",
+    "role": "Design and engineering, solo",
+    "highlights": [
+      "I designed the state model as an operation log (id, lamport clock, author, timestamp) with last-writer-wins registers per field and fractional-index ordering, so applying ops is commutative and idempotent; unit tests shuffle concurrent ops 30 times and assert identical boards.",
+      "I hand-built drag and drop on pointer events with a drop placeholder, edge auto-scroll, long-press touch support and a full keyboard path (Space, arrows, Esc) with aria-live announcements, using no DnD library.",
+      "I implemented real multi-tab sync over BroadcastChannel with localStorage persistence, per-tab offline queues, and a Conflict Review panel with word-level diffs and keep-mine / keep-theirs / merge resolutions that are written back as new ops.",
+      "I made undo and redo operate through the log as inverse ops scoped to my own actions, and built a time-travel scrubber whose 'restore this version' appends diff ops instead of rewriting history.",
+      "I wrote a guided tour whose eight steps complete only when the matching real op or event fires, and a Playwright script that performs it across two pages (including CDP touch drag) and asserts every step.",
+      "I kept the engine framework-agnostic and strictly typed (core/ has no React), with a command palette, shortcuts sheet, light/dark theme, reduced-motion support and phone-width snap scrolling."
+    ],
+    "stack": [
+      "React 18",
+      "TypeScript (strict)",
+      "Vite",
+      "Vitest",
+      "BroadcastChannel",
+      "Web Locks API",
+      "Playwright (verification)"
+    ],
+    "resumeLinks": [],
+    "run": "npm install && npm run dev",
+    "port": 5184,
+    "screenshots": [
+      {
+        "file": "/shots/syncboard/01-drag-and-drop.png",
+        "caption": "Mid-drag: floating card, dashed drop placeholder, siblings reflowing."
+      },
+      {
+        "file": "/shots/syncboard/02-card-detail.png",
+        "caption": "Card detail drawer with labels, assignees, due date and checklist (focus-trapped)."
+      },
+      {
+        "file": "/shots/syncboard/03-offline-queue.png",
+        "caption": "Offline mode: queue badge and the list of locally queued ops."
+      },
+      {
+        "file": "/shots/syncboard/04-conflict-review.png",
+        "caption": "Conflict Review: original vs mine vs a teammate's edit with word-level diff."
+      },
+      {
+        "file": "/shots/syncboard/05-time-travel.png",
+        "caption": "Time-travel scrubber showing the board at an earlier op, read-only, with restore."
+      },
+      {
+        "file": "/shots/syncboard/06-command-palette.png",
+        "caption": "Command palette with fuzzy search over cards and actions."
+      },
+      {
+        "file": "/shots/syncboard/07-guided-tour.png",
+        "caption": "Guided tour partway done, with a simulated teammate editing a card live."
+      },
+      {
+        "file": "/shots/syncboard/08-dark-theme.png",
+        "caption": "Dark theme with the activity feed open and presence cursors."
+      },
+      {
+        "file": "/shots/syncboard/09-phone.png",
+        "caption": "Phone width: columns scroll horizontally with snap; tour collapses to a pill."
+      }
+    ],
+    "measured": [
+      {
+        "label": "Unit tests",
+        "value": "32 passing",
+        "how": "npx vitest run (fractional index, merge/CRDT convergence, undo, restore, conflict detection, fuzzy search, two-replica sync)"
+      },
+      {
+        "label": "End-to-end checks",
+        "value": "52 of 52 passing",
+        "how": "node e2e/tour.e2e.mjs: two pages in one Chrome context, offline/conflict/undo/time travel, touch drag, phone overflow"
+      },
+      {
+        "label": "Production bundle",
+        "value": "227 kB JS (73 kB gzip), 23 kB CSS (5.6 kB gzip)",
+        "how": "npm run build output from vite build"
+      }
+    ]
+  },
+  {
+    "slug": "pulse",
+    "title": "Pulse: live observability and incident console",
+    "tagline": "A Datadog-style console with a hand-built Canvas chart engine and query language, running on a simulated backend in a Web Worker.",
+    "summary": "I built a browser-only observability console: live-streaming metrics, a 240k-line log explorer with its own query language, alert rules, and a full incident workflow. Everything runs on a seeded simulator in a Web Worker, and a guided mission lets visitors investigate a planted outage end to end. I wrote the chart renderer and the query engine from scratch, with no charting or UI libraries.",
+    "role": "Design and engineering, solo",
+    "highlights": [
+      "I hand-built a Canvas 2D time-series renderer: min/max pixel-bucket decimation that provably preserves spikes, a two-layer canvas, DPR-correct sizing, off-screen skipping and a single rAF loop that only runs when something is dirty.",
+      "I implemented linked interaction across charts: brush-to-zoom, shift-drag pan, cursor-anchored wheel zoom, keyboard time navigation, a crosshair and tooltip synchronised across every chart, deploy markers and threshold lines.",
+      "I wrote a log query language from scratch (tokenizer, recursive-descent parser, compiler to typed-column predicates) with positioned syntax and semantic errors, syntax highlighting, autocomplete, saved queries and filter chips, and a hand-windowed list over 240k rows.",
+      "I put the simulation in a Web Worker behind a typed message protocol: seeded generators for 64 metric series and 240k logs, injected incidents (bad deploy, error burst, memory leak), live alert evaluation, and rollbacks that make the metrics actually recover.",
+      "I built the incident workflow: declare from an alert, auto-attached timeline of alerts, deploys and notes, status steps, runbook, rollback, and a post-mortem summary generated from measured data.",
+      "I built a self-checking guided mission whose steps are detected from real application state, and verified it with 30 unit tests plus a 35-check real-Chrome end-to-end script driven by mouse and keyboard."
+    ],
+    "stack": [
+      "React 18",
+      "TypeScript (strict)",
+      "Vite",
+      "Canvas 2D",
+      "Web Workers",
+      "Vitest",
+      "playwright-core"
+    ],
+    "resumeLinks": [],
+    "run": "npm install && npm run dev",
+    "port": 5185,
+    "screenshots": [
+      {
+        "file": "/shots/pulse/01-overview-anomaly.png",
+        "caption": "First screen: live service health, topology, linked charts and a visible latency anomaly, with the guided mission open."
+      },
+      {
+        "file": "/shots/pulse/02-brushed-synced-crosshair.png",
+        "caption": "After brush-zooming the spike: every chart shares the range and shows a synchronised crosshair tooltip."
+      },
+      {
+        "file": "/shots/pulse/04-log-explorer.png",
+        "caption": "Log explorer: highlighted query, filter chip, linked brushable histogram, virtualised rows and a trace detail."
+      },
+      {
+        "file": "/shots/pulse/06-alert-rule-editor.png",
+        "caption": "Alert rule editor with a live preview shading where the rule would have fired."
+      },
+      {
+        "file": "/shots/pulse/07-incident-timeline.png",
+        "caption": "Incident page: status steps, runbook, and a timeline of deploy, alerts, rollback and notes."
+      },
+      {
+        "file": "/shots/pulse/08-service-map-hover.png",
+        "caption": "Service map with a hovered dependency highlighted; the mission is complete."
+      },
+      {
+        "file": "/shots/pulse/05-mission-partial.png",
+        "caption": "Mission checklist partway through, steps ticking off from real state."
+      },
+      {
+        "file": "/shots/pulse/10-dark-overview.png",
+        "caption": "Dark theme overview."
+      }
+    ],
+    "measured": [
+      {
+        "label": "Log query over 240,898 rows",
+        "value": "1.9 to 11.2 ms median (worker)",
+        "how": "performance.now() inside the worker, 6 queries x 12 runs, Chrome 154 on Apple M4"
+      },
+      {
+        "label": "Frames over 20 ms during scripted interaction",
+        "value": "0 of 931",
+        "how": "rAF deltas while wheel-zooming, shift-panning and sweeping the crosshair over the full 28h range with 7 charts (60 Hz headless cap)"
+      },
+      {
+        "label": "Chart draw cost per frame",
+        "value": "median 1.2 ms, p95 8.1 ms",
+        "how": "performance.now() around the shared flush that draws all dirty charts, same run"
+      },
+      {
+        "label": "Decimation of one 100,806-point series",
+        "value": "median 0.1 ms (to 2,402 points)",
+        "how": "300 runs of minMaxBucket in the page; Chrome timer resolution is 0.1 ms"
+      },
+      {
+        "label": "Simulator boot",
+        "value": "about 340 ms",
+        "how": "worker-side timing of generating 6.4M metric samples and 240k log rows"
+      }
+    ]
+  },
+  {
+    "slug": "flowgraph",
+    "title": "flowgraph: a workflow editor with a step-through debugger",
+    "tagline": "Wire nodes into an automation, then watch it run: packets on edges, breakpoints, step into loops, and replayable run history.",
+    "summary": "I built a Zapier/n8n-style workflow editor from scratch: an infinite SVG and HTML canvas, typed ports, an inspector generated from node schemas, and a pure execution engine with branching, loops, merge, retries and error edges. A debugger runs on top of that engine, with breakpoints, step over and step into, node input and output diffs against the previous run, a Gantt timeline and a scrubbable replay. A guided tour that completes as the visitor performs each step opens on a nearly finished workflow.",
+    "role": "Design and engineering, solo",
+    "highlights": [
+      "I wrote the execution engine as a pure, event-emitting dataflow scheduler on an injectable clock: edges resolve as live or dead, so branches, Merge, loops with nested regions, exponential-backoff retries, per-node timeouts, error edges and cancellation all fall out of one rule, and a FakeClock makes 12-second workflows deterministic in milliseconds.",
+      "I built the debugger as a gate in that engine: breakpoints, pause, step over (a Loop is one step) and step into (pauses inside each iteration). One reducer, deriveView(events, t), drives the live canvas, the Gantt timeline and replay scrubbing, so a past run can be replayed exactly.",
+      "I hand-built the canvas without a graph library: cursor-anchored wheel zoom, pinch, trackpad pan, marquee and group move, port-to-port dragging with live bezier preview that lights up valid targets and explains invalid drops, reconnectable edge ends, cycle detection, minimap, and a layered DAG auto-layout (barycenter ordering) that tests show never overlaps nodes.",
+      "I wrote an expression language (Pratt parser, pipes, lambdas, safe built-ins, {{ }} templates) with positioned errors, plus a dry-run schema inference pass so the inspector autocompletes variables from upstream data and shows a live preview of a Transform against real or sample data.",
+      "Every edit is a command with a computed inverse (undo/redo with coalescing), the graph autosaves, exports to JSON and shares as a deflate-compressed URL hash, and 64 Vitest tests cover the engine, expressions, ports, layout, undo/redo and share round-trip.",
+      "I made the guided tour self-completing: eight steps detect whether the visitor actually dragged, wired, edited, ran, broke and inspected, each with a Do it for me button, and verified with a Playwright script that performs them with real mouse drags; keyboard connect mode, ARIA live run announcements and a read-only phone view cover accessibility and small screens."
+    ],
+    "stack": [
+      "React 18",
+      "TypeScript (strict)",
+      "Vite",
+      "SVG + HTML canvas (no graph library)",
+      "Vitest",
+      "Playwright (e2e)",
+      "CompressionStream"
+    ],
+    "resumeLinks": [],
+    "run": "npm install && npm run dev",
+    "port": 5186,
+    "screenshots": [
+      {
+        "file": "/shots/flowgraph/01-run-in-progress.png",
+        "caption": "A run in the editor: packets travelling along edges, nodes showing success, running and skipped states with durations (captured by scrubbing the run's replay)."
+      },
+      {
+        "file": "/shots/flowgraph/02-breakpoint-paused.png",
+        "caption": "Paused on a breakpoint inside a loop iteration: the inspector shows the exact JSON the node is about to receive, and the toolbar offers Continue, Step and Into."
+      },
+      {
+        "file": "/shots/flowgraph/03-invalid-connection.png",
+        "caption": "Dropping an error port on an array input is refused, with the reason shown at the port."
+      },
+      {
+        "file": "/shots/flowgraph/04-transform-preview.png",
+        "caption": "Editing a Transform expression with a live preview computed from inferred upstream data."
+      },
+      {
+        "file": "/shots/flowgraph/05-timeline-gantt.png",
+        "caption": "Gantt timeline of a CRM sync run: retry ticks mark the two failed attempts with exponential backoff before each call succeeds."
+      },
+      {
+        "file": "/shots/flowgraph/06-templates.png",
+        "caption": "Templates gallery with live thumbnails of the shipped workflows."
+      },
+      {
+        "file": "/shots/flowgraph/07-coach-partial.png",
+        "caption": "The guided tour partway through: steps tick off as the visitor performs them."
+      },
+      {
+        "file": "/shots/flowgraph/08-dark-theme.png",
+        "caption": "Dark theme during a fan-out run: three parallel HTTP branches with packets in flight toward the merge nodes."
+      }
+    ],
+    "measured": [
+      {
+        "label": "Unit tests",
+        "value": "64 passing in 4 files",
+        "how": "npm test (vitest run)"
+      },
+      {
+        "label": "End-to-end checks",
+        "value": "36 tour checks and 22 feature checks pass",
+        "how": "node e2e/tour.mjs and node e2e/features.mjs, headless Google Chrome via playwright-core with real mouse input"
+      },
+      {
+        "label": "Pan frame rate, 300 nodes / 299 edges",
+        "value": "59.3 fps (p95 frame 16.8 ms)",
+        "how": "node e2e/bench.mjs: requestAnimationFrame counting over 3 s of scripted Space-drag in headless Chrome, software rendering, 1440x900"
+      },
+      {
+        "label": "Wheel-zoom frame rate, 300 nodes / 299 edges",
+        "value": "60 fps (p95 frame 16.7 ms)",
+        "how": "same script, 3 s of scripted wheel events"
+      },
+      {
+        "label": "Production bundle",
+        "value": "306 kB JS (99.7 kB gzip) + 40 kB CSS (9 kB gzip)",
+        "how": "vite build output; react and react-dom are the only runtime dependencies"
+      }
+    ]
+  },
+  {
+    "slug": "clinic-desk",
+    "title": "Clinic Desk — front-desk app for small clinics",
+    "tagline": "A receptionist-first PWA for queues, bookings, billing and follow-ups, built for clinics in Kolkata.",
+    "summary": "An offline-first React app I built to replace paper, WhatsApp threads and memory at independent clinics. It handles walk-ins and booked slots in one live queue, itemised billing, follow-up tracking and a doctor consult view, in English, Bengali and Hindi.",
+    "role": "Product and engineering lead",
+    "highlights": [
+      "I put one data-provider interface in front of two backends: an offline-first Dexie (IndexedDB) provider for single-device use and a Supabase provider for multi-tenant use. Pages never import a database directly, so switching backend is an environment flag.",
+      "Clinical notes are encrypted in the browser with AES-GCM using a PBKDF2-derived key (210,000 iterations), so stored records are ciphertext.",
+      "A single live queue merges phone, WhatsApp and walk-in patients. Tokens are issued at billing time and never renumbered, while booked slots keep the pre-queue list in time order.",
+      "Slot booking respects each doctor's visiting hours, working days and breaks, and records when a patient wanted a slot but none was free, which feeds the analytics view.",
+      "A WhatsApp booking bot and notifications run as Netlify functions, with a public booking page and consent captured for each patient.",
+      "It is an installable PWA with role-aware screens for front desk and doctors, a mobile bottom-nav layout, and English, Bengali and Hindi UI strings."
+    ],
+    "stack": [
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "Dexie / IndexedDB",
+      "Supabase",
+      "React Router 7",
+      "i18next",
+      "Netlify Functions",
+      "PWA"
+    ],
+    "resumeLinks": [
+      "Owning a product end to end, from requirements to a working app",
+      "Data-layer architecture and clear seams between UI and backend",
+      "Accessibility, responsive design and localisation for non-technical users",
+      "Security-minded front-end work: client-side encryption, consent capture"
+    ],
+    "run": "VITE_BACKEND=demo npm run dev",
+    "port": 5176,
+    "screenshots": [
+      {
+        "file": "/shots/clinic-desk/queue.png",
+        "caption": "Live queue with today's bookings, per-doctor filters and billing status. All patients shown are fictional."
+      },
+      {
+        "file": "/shots/clinic-desk/consult.png",
+        "caption": "Doctor consult view: the patient in the room, the waiting list and completed visits."
+      },
+      {
+        "file": "/shots/clinic-desk/calendar.png",
+        "caption": "Calendar: booked slots in time order, plus visits with no fixed time."
+      },
+      {
+        "file": "/shots/clinic-desk/analytics.png",
+        "caption": "Analytics: wait and consult times and busiest hours over the last 30 days."
+      },
+      {
+        "file": "/shots/clinic-desk/queue-mobile.png",
+        "caption": "The same queue on a phone, with bottom navigation."
+      },
+      {
+        "file": "/shots/clinic-desk/billing.png",
+        "caption": "Billing: collected and outstanding totals, with one tap to bill a visit."
+      },
+      {
+        "file": "/shots/clinic-desk/follow-ups.png",
+        "caption": "Follow-ups due, with call and WhatsApp actions and consent flags."
+      },
+      {
+        "file": "/shots/clinic-desk/settings.png",
+        "caption": "Clinic settings: profile, team, services, messaging and data privacy."
+      }
+    ],
+    "measured": []
+  },
+  {
+    "slug": "a11y-kit",
+    "title": "a11y-kit: accessible React components with live axe auditing",
+    "tagline": "Twelve WAI-ARIA components I hand-built in strict TypeScript, documented in Storybook and audited by axe-core in the page.",
+    "summary": "A component library implementing Dialog, Tabs, Combobox, Menu, Accordion, Stepper, Toast, Tooltip, Switch, Radio group, a sortable Data table and a skip-link/landmark layout directly from the WAI-ARIA Authoring Practices, with no UI library behind the behaviour. A playground runs axe-core against the live DOM on every interaction and theme change, and Storybook documents each pattern's keyboard model. I verify behaviour with Vitest and Cypress using real key events.",
+    "role": "Sole author: component APIs, accessibility behaviour, theming, Storybook docs, tests and tooling",
+    "highlights": [
+      "I wrote the shared primitives (useRovingFocus, useFocusTrap, useInert, useTypeahead, useStableId) with compound-component APIs, composeHandlers overrides and a polymorphic props type under strict TypeScript.",
+      "My Stepper's arrow-key order skips unavailable steps and re-derives its single tab stop each render, so locking the focused step cannot strand keyboard users.",
+      "The Dialog has a focus trap, inert background, focus return and a document-level Escape stack. Cypress with real Tab events caught a focus-return failure (restoring focus while still inert) that jsdom could not.",
+      "I built the Toast system on persistent polite and assertive live regions with hover- and focus-pausable timers, and the Tooltip to WCAG 1.4.13.",
+      "Light, dark and high-contrast themes come from CSS variables only, with prefers-reduced-motion handled through one duration token.",
+      "The playground audit panel runs axe-core live: 0 violations at rest and in 24 theme-by-open-state combinations, with nothing suppressed."
+    ],
+    "stack": [
+      "React 18",
+      "TypeScript (strict)",
+      "Vite",
+      "Storybook 8",
+      "axe-core",
+      "Vitest",
+      "Testing Library",
+      "Cypress",
+      "cypress-real-events",
+      "CSS custom properties"
+    ],
+    "resumeLinks": [
+      "WCAG 2.1 and ARIA expertise",
+      "Storybook component documentation",
+      "Cypress end-to-end testing",
+      "React and TypeScript",
+      "Mentoring on accessibility (keyboard-model docs and tests as teaching material)"
+    ],
+    "run": "cd portfolio/projects/a11y-kit && npm install && npm run dev",
+    "port": 5182,
+    "screenshots": [
+      {
+        "file": "/shots/a11y-kit/playground-overview.png",
+        "caption": "Playground with the live axe-core panel reporting 0 violations."
+      },
+      {
+        "file": "/shots/a11y-kit/storybook-docs.png",
+        "caption": "Storybook MDX page documenting each pattern's keyboard model."
+      },
+      {
+        "file": "/shots/a11y-kit/storybook-canvas-controls.png",
+        "caption": "Combobox story with the Controls panel."
+      },
+      {
+        "file": "/shots/a11y-kit/storybook-a11y-panel.png",
+        "caption": "Tabs story with visible focus ring and the a11y addon showing 0 violations."
+      },
+      {
+        "file": "/shots/a11y-kit/combobox-open-focus.png",
+        "caption": "Open combobox with keyboard-driven active option and visible focus ring."
+      },
+      {
+        "file": "/shots/a11y-kit/dark-dialog-open.png",
+        "caption": "Dark theme: modal dialog with the page behind inert and focus on the Cancel button."
+      },
+      {
+        "file": "/shots/a11y-kit/high-contrast-tabs.png",
+        "caption": "High-contrast theme: focused tab with 4px focus ring."
+      },
+      {
+        "file": "/shots/a11y-kit/high-contrast-stepper.png",
+        "caption": "High-contrast stepper: unavailable steps dashed and skipped by keyboard focus."
+      }
+    ],
+    "measured": [
+      {
+        "label": "Vitest tests passing",
+        "value": "42 of 42 (7 files)",
+        "how": "npm test"
+      },
+      {
+        "label": "Cypress tests passing",
+        "value": "16 of 16 (4 specs: Dialog, Tabs, Combobox, Stepper)",
+        "how": "npx cypress run --browser chrome against the playground, Chrome 154 headless"
+      },
+      {
+        "label": "axe violations, playground at rest",
+        "value": "0 in light, dark and high-contrast",
+        "how": "node scripts/audit.mjs (axe-core 4.13 in Chrome)"
+      },
+      {
+        "label": "axe violations, interactive states",
+        "value": "0 across 24 combinations (8 open states x 3 themes)",
+        "how": "node scripts/audit-states.mjs"
+      },
+      {
+        "label": "Storybook stories rendering without error",
+        "value": "14 of 14",
+        "how": "node scripts/check-stories.mjs"
+      },
+      {
+        "label": "Library size (ES build, unminified)",
+        "value": "36.8 kB JS (10.2 kB gzip) + 4.3 kB gzip CSS",
+        "how": "npm run build:lib"
+      },
+      {
+        "label": "Playground bundle (includes axe-core)",
+        "value": "790 kB JS (227 kB gzip)",
+        "how": "npm run build"
+      }
+    ]
+  },
+  {
+    "slug": "pipeline",
+    "title": "Pipeline — 50,000-deal sales table",
+    "tagline": "A keyboard-first, virtualized CRM table that stays smooth on an unreliable network.",
+    "summary": "A frontend I built for a shared 50,000-deal pipeline used by about 20 reps. A fake API simulates latency, save failures and teammates editing the same deals. The UI uses optimistic, queued saves with per-row status and per-row failure recovery.",
+    "role": "Design and implementation, solo",
+    "highlights": [
+      "A virtualized table (TanStack Virtual) renders all 50,000 deals, with client-side filter, sort, multi-select and bulk stage moves.",
+      "I hand-rolled the store on useSyncExternalStore with fine-grained subscriptions, so a single row update does not re-render the table.",
+      "Saves are optimistic and queued, with per-row sync indicators and a failed-saves action that shows which rows failed instead of retrying blindly.",
+      "I fixed a stale-save race where a slow response overwrote a newer edit on the same deal, and documented it in the write-up.",
+      "It is fully keyboard-driven: arrow navigation, shift-range selection, number keys to move stage, and / to search.",
+      "State persists to IndexedDB, so reloads resume mid-flight, including failed saves."
+    ],
+    "stack": [
+      "React 18",
+      "TypeScript",
+      "Vite",
+      "TanStack Virtual",
+      "IndexedDB",
+      "useSyncExternalStore"
+    ],
+    "resumeLinks": [
+      "Performance optimisation on data-intensive UIs",
+      "Event-driven state and data exchange",
+      "Accessibility and keyboard-first design"
+    ],
+    "run": "npm install && npm run dev",
+    "port": 5173,
+    "screenshots": [
+      {
+        "file": "/shots/pipeline/table.png",
+        "caption": "All 50,000 deals in one virtualized table, with KPI cards and per-stage chips above it."
+      },
+      {
+        "file": "/shots/pipeline/bulk-select.png",
+        "caption": "Keyboard range-select with a bulk-move bar: press 1–7 to move the selection."
+      },
+      {
+        "file": "/shots/pipeline/api-simulator.png",
+        "caption": "The network simulator: tune latency, failure rate and teammate-edit frequency live."
+      }
+    ],
+    "measured": []
+  }
+]

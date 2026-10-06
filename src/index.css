@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { background: #141414; font-family: 'Inter', system-ui, sans-serif; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+body { color: #fff; -webkit-font-smoothing: antialiased; }
+:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+@layer utilities {
+  .scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
+  .outline-num { color: #141414; -webkit-text-stroke: 3px #595959; }
+}
+@layer components {
+  .display { font-family: 'Bebas Neue', Impact, sans-serif; letter-spacing: 0.02em; font-weight: 400; }
+  .btn { @apply inline-flex min-h-11 items-center justify-center gap-2 rounded px-5 py-2 text-base font-semibold transition-colors sm:px-7 sm:py-2.5 sm:text-lg; }
+  .btn-light { @apply btn bg-white text-black hover:bg-white/75; }
+  .btn-dim { @apply btn bg-[#6d6d6eb3] text-white hover:bg-[#6d6d6e66]; }
+}
