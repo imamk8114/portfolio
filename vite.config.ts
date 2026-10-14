@@ -20,7 +20,7 @@ function atsFriendlyHtml(): Plugin {
     </article>`).join('');
   const skills = resume.skills.map((s) => `<li>${esc(s.name)}: ${esc(s.items.join(', '))}</li>`).join('');
   const body = `
-  <main>
+  <main class="ats-prerender">
     <h1>${esc(profile.name)}, ${esc(profile.role)}</h1>
     <p>${esc(profile.location)} | <a href="mailto:${profile.email}">${esc(profile.email)}</a> | <a href="${profile.linkedin}">LinkedIn</a> | <a href="${profile.resumeUrl}">Download resume (PDF)</a></p>
     <h2>Professional Summary</h2><p>${esc(summary)}</p>
@@ -39,7 +39,7 @@ function atsFriendlyHtml(): Plugin {
     name: 'ats-friendly-html',
     transformIndexHtml(html) {
       return html
-        .replace('<!--ats-head-->', `<script type="application/ld+json">${JSON.stringify(ld)}</script>`)
+        .replace('<!--ats-head-->', `<style>html,body{background:#141414}.ats-prerender{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}</style><script type="application/ld+json">${JSON.stringify(ld)}</script>`)
         .replace('<!--ats-body-->', body);
     },
   };
