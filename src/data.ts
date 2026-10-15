@@ -39,6 +39,7 @@ export const links: Record<string, { live?: string; repo?: string }> = {
   'a11y-kit': { live: 'https://a11y-kit-imamk8114.netlify.app/', repo: 'https://github.com/imamk8114/a11y-kit' },
   pipeline: { live: 'https://pipeline4sales-demo.netlify.app/', repo: 'https://github.com/imamk8114/sales-pipeline' },
   'clinic-desk': { live: 'https://clinic-desk-imamk8114.netlify.app/' },
+  'clinic-rag': { live: 'https://clinic-rag-imamk8114.netlify.app/', repo: 'https://github.com/imamk8114/clinic-rag' },
 };
 
 export const names: Record<string, string> = {
@@ -47,6 +48,7 @@ export const names: Record<string, string> = {
   flowgraph: 'Flowgraph',
   'a11y-kit': 'A11y Kit',
   'clinic-desk': 'Clinic Desk',
+  'clinic-rag': 'Clinic Protocol Assistant',
   pipeline: 'Pipeline',
 };
 
@@ -56,6 +58,7 @@ export const categories: Record<string, string> = {
   flowgraph: 'Workflow automation',
   'a11y-kit': 'Design system',
   'clinic-desk': 'Healthcare PWA',
+  'clinic-rag': 'Retrieval-augmented generation',
   pipeline: 'Sales CRM',
 };
 

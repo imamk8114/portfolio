@@ -40,6 +40,18 @@
       ]
     },
     {
+      "name": "AI & Retrieval",
+      "description": "I build retrieval-augmented generation: chunking, embeddings, hybrid search, grounded and cited answers, and evaluation on a golden question set.",
+      "items": [
+        "RAG",
+        "Embeddings",
+        "Hybrid search",
+        "LLM prompts",
+        "Claude API",
+        "Agentforce"
+      ]
+    },
+    {
       "name": "Performance",
       "description": "I make data-heavy screens faster with lazy-loading, pre-loading, event-driven data flow and by migrating legacy components.",
       "items": [

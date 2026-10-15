@@ -3,7 +3,7 @@ import { skills } from '../data';
 
 export default function SkillsRow() {
   return (
-    <Row id="skills" title="Top 5 Skills">
+    <Row id="skills" title={`Top ${skills.length} Skills`}>
       {skills.map((s, i) => (
         <li key={s.name} className="flex shrink-0 snap-start items-end">
           <span aria-hidden className="outline-num display -mr-5 select-none text-[11rem] leading-[0.8] sm:text-[13rem]">{i + 1}</span>

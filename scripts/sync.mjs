@@ -12,7 +12,7 @@ rmSync(shotsDir, { recursive: true, force: true });
 mkdirSync(join(root, 'src', 'generated'), { recursive: true });
 // Projects kept on disk but not shown on the site.
 const hidden = new Set(['flow-studio', 'freight-desk']);
-const order = ['syncboard', 'pulse', 'flowgraph', 'clinic-desk', 'a11y-kit', 'pipeline'];
+const order = ['syncboard', 'pulse', 'flowgraph', 'clinic-desk', 'clinic-rag', 'a11y-kit', 'pipeline'];
 const projects = [];
 for (const dir of readdirSync(projectsDir)) {
   const file = join(projectsDir, dir, 'PROJECT.json');

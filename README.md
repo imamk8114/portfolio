@@ -11,6 +11,7 @@ React 18, TypeScript, Vite, Tailwind CSS and Framer Motion.
 | Pulse, observability and incident console | https://pulse-imamk8114.netlify.app/ | https://github.com/imamk8114/pulse |
 | Flowgraph, workflow editor with a debugger | https://flowgraph-imamk8114.netlify.app/ | https://github.com/imamk8114/flowgraph |
 | Clinic Desk, front-desk PWA for clinics | https://clinic-desk-imamk8114.netlify.app/ | private repository |
+| Clinic Protocol Assistant, retrieval-augmented Q&A over clinic protocols | https://clinic-rag-imamk8114.netlify.app/ | https://github.com/imamk8114/clinic-rag |
 | A11y Kit, accessible React components | https://a11y-kit-imamk8114.netlify.app/ | https://github.com/imamk8114/a11y-kit |
 | Pipeline, 50,000-deal sales table | https://pipeline4sales-demo.netlify.app/ | https://github.com/imamk8114/sales-pipeline |
 

@@ -328,6 +328,80 @@
     "measured": []
   },
   {
+    "slug": "clinic-rag",
+    "title": "Clinic Protocol Assistant — retrieval-augmented Q&A",
+    "tagline": "Ask a question about clinic protocols and get a cited answer. Hybrid keyword and vector retrieval runs entirely in the browser.",
+    "summary": "A retrieval-augmented generation (RAG) app for clinic staff. It chunks six protocol documents, embeds them in the browser, retrieves with BM25 and vector search merged by reciprocal rank fusion, and asks Claude to answer using only the retrieved passages, citing each one. Without an API key it falls back to extracted, cited sentences. I wrote the documents and an 18-question evaluation set so retrieval quality is measured, not assumed.",
+    "role": "Design and engineering",
+    "highlights": [
+      "Documents are chunked along their headings (long sections split on sentence boundaries with one sentence of overlap), and the heading stays in the chunk text because it often carries the topic the body never repeats.",
+      "Retrieval is hybrid: a from-scratch BM25 index for exact terms and all-MiniLM-L6-v2 embeddings (Transformers.js, running in a Web Worker) for meaning, merged with reciprocal rank fusion because the two score scales are not comparable.",
+      "Each source card shows its rank in the keyword and meaning searches, so you can see why a passage was chosen, and can switch between Hybrid, Keyword and Meaning to compare.",
+      "Generation uses the Claude Messages API streamed straight from the browser with the visitor's own key, held in session storage and sent only to api.anthropic.com. The prompt allows answers only from numbered excerpts, requires [n] citations and tells the model to say when the answer is not in the documents.",
+      "Citation markers are only turned into links when they point at an excerpt that was actually sent, so a made-up [7] cannot masquerade as a source.",
+      "Embeddings are cached in IndexedDB under a fingerprint of the model and chunk text, so repeat visits skip indexing and any storage failure just means recompute.",
+      "Every failure degrades instead of blocking: no key gives extractive cited answers, an API error keeps the retrieved passages on screen, and a failed model download leaves keyword search working."
+    ],
+    "stack": [
+      "React 18",
+      "TypeScript",
+      "Vite",
+      "Transformers.js",
+      "Web Workers",
+      "IndexedDB",
+      "BM25",
+      "Claude API",
+      "Vitest"
+    ],
+    "resumeLinks": [
+      "Hands-on retrieval-augmented generation: chunking, embeddings, hybrid search and grounded, cited answers",
+      "Evaluating retrieval with a golden question set rather than judging by eye",
+      "Prompt design for grounded answers and handling the cases where the model cannot answer",
+      "Moving ML inference off the main thread and caching its output in the browser"
+    ],
+    "run": "npm run dev",
+    "port": 5187,
+    "screenshots": [
+      {
+        "file": "/shots/clinic-rag/02-hybrid-paraphrase.png",
+        "caption": "Hybrid search finds the retention rule for a question that never uses the word “minors”, and shows how each method ranked every source."
+      },
+      {
+        "file": "/shots/clinic-rag/03-keyword-misses.png",
+        "caption": "Keyword search alone on the same question: the right section is ranked fifth, so the answer is wrong."
+      },
+      {
+        "file": "/shots/clinic-rag/04-meaning-finds-it.png",
+        "caption": "Meaning search alone puts the correct section first for the same question."
+      },
+      {
+        "file": "/shots/clinic-rag/01-landing.png",
+        "caption": "Starting state, with suggested questions worded differently from the protocols on purpose."
+      },
+      {
+        "file": "/shots/clinic-rag/05-mobile.png",
+        "caption": "The same flow on a phone, with sources stacked under the answer."
+      }
+    ],
+    "measured": [
+      {
+        "label": "Retrieval: correct section in top 3, all 18 questions",
+        "value": "keyword 83%, meaning 94%, hybrid 100%",
+        "how": "npm run eval. 18 questions I wrote against 6 fictional documents (30 passages), embeddings from all-MiniLM-L6-v2. A small, self-authored set, so it shows the method's behaviour, not general accuracy."
+      },
+      {
+        "label": "Retrieval: 10 questions worded differently from the protocols",
+        "value": "keyword 70%, meaning 90%, hybrid 100% (hit@3)",
+        "how": "Same run, paraphrase subset. On the 8 questions that reuse the protocols' words, all three methods scored 100%."
+      },
+      {
+        "label": "Mean reciprocal rank, all questions",
+        "value": "keyword 0.84, meaning 0.96, hybrid 0.94",
+        "how": "Same run. Hybrid found the section in the top 3 every time but ranked it first slightly less often than meaning search alone."
+      }
+    ]
+  },
+  {
     "slug": "a11y-kit",
     "title": "a11y-kit: accessible React components with live axe auditing",
     "tagline": "Twelve WAI-ARIA components I hand-built in strict TypeScript, documented in Storybook and audited by axe-core in the page.",
